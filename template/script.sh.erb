@@ -21,21 +21,29 @@ module list
 <%- end -%>
 
 # Benchmark info
-echo "TIMING - Starting QuPath at: $(date)"
+echo "TIMING - Starting CellProfiler at: $(date)"
 
-# Launch QuPath using xpra
+# Launch CellProfiler using xpra
 set -x
 apptainer exec ${CONTAINER} xpra start \
-    --minimal=yes \
+    --mdns=no \
     --bind-tcp=0.0.0.0:${PORT},auth=file,filename=${PASSWORD_FILE} \
     --websocket-upgrade=yes \
     --socket-dirs=${PWD} \
-    --opengl=yes \
     --html=on \
-    --compression-level=1 \
-    --start="/QuPath/bin/QuPath -Dqupath.prefs.name=myPrefs" \
+    --resize-display=yes \
+    --dpi=96 \
+    --file-transfer=no \
+    --open-files=no \
+    --open-url=no \
+    --printing=no \
+    --webcam=no \
+    --notifications=no \
+    --system-tray=no \
+    --audio=no \
+    --start-child-after-connect="cellprofiler" \
     --exit-with-windows=yes \
-    --daemon=no \
     --clipboard=yes \
-    --xvfb="/usr/bin/Xvfb +extension Composite -screen 0 1920x1080x24+32 -nolisten tcp -noreset -auth ${XAUTHORITY}" \
+    --daemon=no \
+    --xvfb="Xvfb" \
     $DISPLAY

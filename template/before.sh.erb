@@ -40,8 +40,8 @@ PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print
 
 # setup secure DISPLAY
 export DISPLAY=:$(shuf -n 1 -i 100-200)
-xauth add ${DISPLAY} . $(xxd -l 16 -p /dev/urandom)
-export XAUTHORITY="${HOME}/.Xauthority"
+# let XPRA handle the xauth
+export XPRA_PRIVATE_XAUTH=1
 
 # The `$CONFIG_FILE` environment variable is exported as it is used in the main
 # `script.sh.erb` file when launching the Jupyter Notebook server.
@@ -51,7 +51,7 @@ export XAUTHORITY="${HOME}/.Xauthority"
 export PASSWORD_FILE="${PWD}/password.txt"
 
 # define container location
-export CONTAINER="${HOME}/bin/qupath_060_xpra_20251009.sif"
+export CONTAINER="${HOME}/bin/cellprofiler_xpra_20261015.sif"
 
 # Generate password file with secure file permissions
 (
