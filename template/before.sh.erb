@@ -43,6 +43,9 @@ export DISPLAY=:$(shuf -n 1 -i 100-200)
 # let XPRA handle the xauth
 export XPRA_PRIVATE_XAUTH=1
 
+# Private runtime dir for xpra's session files and sockets.
+export XDG_RUNTIME_DIR="$(mktemp -d -t xpra.XXXXXX)"
+
 # The `$CONFIG_FILE` environment variable is exported as it is used in the main
 # `script.sh.erb` file when launching the Jupyter Notebook server.
 #export CONFIG_FILE="${PWD}/config.py"

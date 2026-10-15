@@ -6,9 +6,6 @@ echo "TIMING - Starting main script at: $(date)"
 # Set working directory to home directory
 cd "${HOME}"
 
-# Clear any existing XDG_RUNTIME_DIR to avoid warnings from dconf
-unset XDG_RUNTIME_DIR
-
 <%- unless context.modules.blank? -%>
 # Purge the module environment to avoid conflicts
 module purge
@@ -29,7 +26,7 @@ apptainer exec ${CONTAINER} xpra start \
     --mdns=no \
     --bind-tcp=0.0.0.0:${PORT},auth=file,filename=${PASSWORD_FILE} \
     --websocket-upgrade=yes \
-    --socket-dirs=${PWD} \
+    --socket-dirs=${XDG_RUNTIME_DIR} \
     --html=on \
     --resize-display=yes \
     --dpi=96 \
